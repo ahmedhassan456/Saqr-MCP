@@ -40,6 +40,7 @@ Saqr-MCP is a Python application that implements the Model Context Protocol (MCP
 
    ```bash
    uv add -r requirements.txt
+   playwright install chromium
    ```
 
 4. Set up environment variables:
