@@ -80,14 +80,16 @@ class SaqrMCPClient:
             with loading_animation(f"Calling {tool_name}"):
                 result = await self.session.call_tool(tool_name, tool_args)
 
+            logger.info(f"Tool result: {result.content}")
+
             with loading_animation("Processing tool result"):
                 response  = ollama.chat(
                     model=self.model,
                     messages=[{
                             "role": "system",
-                            "content": f"""You are a helpful assistant. \n answer the user question based on the tool result.
+                            "content": f"""You are a helpful assistant. \n answer the user question based on the web search tool result.
                             
-                            Tool result: {result.content}""",
+                            Web Search tool result: {result.content}""",
                         },
                         {
                             "role": "user",

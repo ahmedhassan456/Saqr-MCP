@@ -11,14 +11,12 @@ mcp = FastMCP("Saqr Server")
 @mcp.tool()
 async def web_search(
     query: str,
-    max_results: Optional[int] = 3
 ) -> Dict[str, any]:
     """
     Get data from web.
     
     Args:
         query: The search query.
-        max_results: The maximum number of results to return.
     
     Returns:
         A dictionary with extracted data (title, content) and status.
@@ -28,17 +26,17 @@ async def web_search(
         results = []
         links = []
         with DDGS() as ddgs:
-            for r in ddgs.text(query, max_results=max_results):
+            for r in ddgs.text(query, max_results=3):
                 link = r.get('href') or r.get('link')
                 if link:
                     links.append(link)
             
 
         async with async_playwright() as playwright:
-            browser = await playwright.chromium.launch(headless=False)
+            browser = await playwright.chromium.launch(headless=True)
             context = await browser.new_context()
 
-            for i, link in enumerate(links[:max_results]):
+            for i, link in enumerate(links[:3]):
                 logger.debug(f"Processing link {i+1}: {link}")
                 page = await context.new_page()
                 try:
