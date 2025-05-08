@@ -1,0 +1,15 @@
+[project]
+name = "saqr-mcp"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "duckduckgo-search==8.0.1",
+    "groq==0.24.0",
+    "httpx==0.28.1",
+    "loguru==0.7.3",
+    "mcp[cli]==1.7.1",
+    "ollama>=0.4.8",
+    "playwright==1.52.0",
+]
