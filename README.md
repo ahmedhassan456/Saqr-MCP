@@ -1,6 +1,7 @@
-# Saqr-MCP
+# Saqr-MCP ![image](https://github.com/user-attachments/assets/6ef5b2ec-b421-483d-82c7-4e71a5082d3c)
 
-Saqr-MCP is a Python application that implements the Model Context Protocol (MCP) to enable AI assistant capabilities with local models. It provides a client-server architecture where the client communicates with local models through Ollama, while the server provides web search capabilities using Playwright and DuckDuckGo.
+
+Saqr-MCP is a Python application that implements the Model Context Protocol (MCP) to enable AI assistant capabilities with local models. It provides a client-server architecture where the client communicates with local models through Ollama, while the server provides tools for the LLM
 
 ## Features
 
