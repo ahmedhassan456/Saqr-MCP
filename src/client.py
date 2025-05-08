@@ -14,6 +14,7 @@ class SaqrMCPClient:
         self.session: Optional[ClientSession] = None
         self.exit_stack = AsyncExitStack()
         self.model = os.getenv("MODEL_NAME")
+        logger.info(f"Using model: {self.model}")
 
     async def connect_to_server(self, args: Optional[list[str]] = None) -> None:
         """Connect to an MCP server"""
@@ -38,7 +39,7 @@ class SaqrMCPClient:
         logger.info("Connected to server")
         response = await self.session.list_tools()
         tools = response.tools
-        logger.info(f"\nConnected to server with tools: {', '.join(tool.name for tool in tools)}")
+        logger.info(f"Connected to server with tools: {', '.join(tool.name for tool in tools)}")
 
     async def process_query(self, query: str) -> str:
         """Process a query using ollama and available tools"""
@@ -84,23 +85,22 @@ class SaqrMCPClient:
                     model=self.model,
                     messages=[{
                             "role": "system",
-                            "content": f"""You are a helpful assistant. \n answer the question based on the tool result.
+                            "content": f"""You are a helpful assistant. \n answer the user question based on the tool result.
                             
                             Tool result: {result.content}""",
                         },
                         {
                             "role": "user",
-                            "content": query
+                            "content": f"User Question: {query}"
                         }
                     ],
-                    tools=available_tools,
                 )
 
             return response["message"]["content"]
     
     async def chat_loop(self):
         """Run an interactive chat loop"""
-        logger.info("\nMCP Client Started!")
+        logger.info("MCP Client Started!")
         logger.info("Type your queries or 'quit' to exit.")
 
         while True:

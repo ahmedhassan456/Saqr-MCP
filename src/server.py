@@ -38,12 +38,12 @@ async def web_search(
             browser = await playwright.chromium.launch(headless=False)
             context = await browser.new_context()
 
-            for i, link in enumerate(links[:3]):
+            for i, link in enumerate(links[:max_results]):
                 logger.debug(f"Processing link {i+1}: {link}")
                 page = await context.new_page()
                 try:
-                    async with asyncio.timeout(30):
-                        await page.goto(link, timeout=30000)
+                    async with asyncio.timeout(60):
+                        await page.goto(link, timeout=60000)
                     
                     title = await page.title()
                     content_elements = await page.query_selector_all('p')
