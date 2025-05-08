@@ -31,7 +31,7 @@ Saqr-MCP is a Python application that implements the Model Context Protocol (MCP
    ```bash
    uv venv
    # On Windows
-   venv\Scripts\activate
+   .venv\Scripts\activate
    # On Unix or MacOS
    source venv/bin/activate
    ```
