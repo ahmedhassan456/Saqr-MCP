@@ -44,12 +44,6 @@ class SaqrMCPClient:
 
     async def process_query(self, query: str) -> str:
         """Process a query using ollama and available tools"""
-        # messages = [
-        #     {
-        #         "role": "user",
-        #         "content": query
-        #     }
-        # ]
 
         messages = self.history
 
