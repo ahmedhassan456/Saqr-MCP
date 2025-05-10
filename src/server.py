@@ -17,7 +17,16 @@ def web_search(query: str):
     Args:
         query (str): The search query.
     """
-    return search_client.search(query)
+
+    try:
+        results = search_client.search(query)
+        if results:
+            return results
+        else:
+            return "No results found."
+    except Exception as e:
+        logger.error(f"Error during web search: {e}")
+        return "An error occurred while performing the search."
 
 
 def main():
