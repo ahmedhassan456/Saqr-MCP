@@ -7,7 +7,7 @@ import ollama
 from dotenv import load_dotenv
 from src.logger import logger, loading_animation
 
-load_dotenv()
+_ = load_dotenv()
 
 class SaqrMCPClient:
     def __init__(self):
@@ -15,6 +15,7 @@ class SaqrMCPClient:
         self.exit_stack = AsyncExitStack()
         self.model = os.getenv("MODEL_NAME")
         logger.info(f"Using model: {self.model}")
+        self.history = []
 
     async def connect_to_server(self, args: Optional[list[str]] = None) -> None:
         """Connect to an MCP server"""
@@ -43,12 +44,14 @@ class SaqrMCPClient:
 
     async def process_query(self, query: str) -> str:
         """Process a query using ollama and available tools"""
-        messages = [
-            {
-                "role": "user",
-                "content": query
-            }
-        ]
+        # messages = [
+        #     {
+        #         "role": "user",
+        #         "content": query
+        #     }
+        # ]
+
+        messages = self.history
 
         tools = await self.session.list_tools()
 
@@ -61,44 +64,46 @@ class SaqrMCPClient:
             }
         } for tool in tools.tools]
 
-        with loading_animation("Processing query"):
-            response = ollama.chat(
-                model=self.model,
-                messages=messages,
-                tools=available_tools,
-            )
+        stop = False
+        while not stop:
+            try:
+                with loading_animation("Processing query"):
+                    response = ollama.chat(
+                        model=self.model,
+                        messages=messages,
+                        tools=available_tools,
+                    )
 
-        tool_calls = response["message"].get("tool_calls")
-        if tool_calls is None:
-            return response["message"]["content"]
-        else: 
-            tool_name = tool_calls[0]["function"]["name"]
-            tool_args = tool_calls[0]["function"]["arguments"]
+                tool_calls = response["message"].get("tool_calls")
+                if tool_calls is None:
+                    messages.append({
+                        "role": "assistant",
+                        "content": response["message"]["content"],
+                    })
+                    stop = True
+                else:
+                    tool_name = tool_calls[0]["function"]["name"]
+                    tool_args = tool_calls[0]["function"]["arguments"]
 
-            logger.info(f"Calling {tool_name}")
+                    logger.info(f"Calling {tool_name}")
 
-            with loading_animation(f"Calling {tool_name}"):
-                result = await self.session.call_tool(tool_name, tool_args)
+                    with loading_animation(f"Calling {tool_name}"):
+                        result = await self.session.call_tool(tool_name, tool_args)
 
-            logger.info(f"Tool result: {result.content}")
+                    logger.info(f"{tool_name} result: {result.content}")
 
-            with loading_animation("Processing tool result"):
-                response  = ollama.chat(
-                    model=self.model,
-                    messages=[{
-                            "role": "system",
-                            "content": f"""You are a helpful assistant. \n answer the user question based on the web search tool result.
-                            
-                            Web Search tool result: {result.content}""",
-                        },
-                        {
-                            "role": "user",
-                            "content": f"User Question: {query}"
-                        }
-                    ],
-                )
+                    messages.append({
+                        "role": "system",
+                        "content": f"""For the user question {query} we can answer based on the {tool_name} tool result.
+                        
+                        {tool_name} tool result: \n{result.content}""",
+                    })
 
-            return response["message"]["content"]
+            except Exception as e:
+                logger.error(f"Error processing query: {str(e)}")
+                stop = True
+            
+        return messages[-1]["content"]
     
     async def chat_loop(self):
         """Run an interactive chat loop"""
@@ -112,8 +117,18 @@ class SaqrMCPClient:
                 if query.lower() == 'quit':
                     break
 
+                self.history.append({
+                    "role": "user",
+                    "content": query
+                })
+
                 response = await self.process_query(query)
                 print("\n" + response)
+
+                self.history.append({ 
+                    "role": "assistant",
+                    "content": response
+                })
 
             except Exception as e:
                 logger.error(f"\nError: {str(e)}")

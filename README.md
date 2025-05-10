@@ -1,12 +1,11 @@
 # Saqr-MCP ![image](https://github.com/user-attachments/assets/2ee374a5-8b63-4f5a-b7fd-5bdae3a05e37)
 
-
-Saqr-MCP is a Python application that implements the Model Context Protocol (MCP) to enable AI assistant capabilities with local models. It provides a client-server architecture where the client communicates with local models through Ollama, while the server provides tools for the LLM
+Saqr-MCP is a Python application that implements the Model Context Protocol (MCP) to enable AI assistant capabilities with local models. It provides a client-server architecture where the client communicates with local models through Ollama, while the server provides tools for the LLM including web search capabilities.
 
 ## Features
 
 - Interactive chat interface for querying the model
-- Web search tool integration using DuckDuckGo and Playwright
+- Robust web search tool integration using Tavily API
 - Local model inference through Ollama
 - Async architecture for efficient processing
 - Visual loading animations for better user experience
@@ -40,12 +39,12 @@ Saqr-MCP is a Python application that implements the Model Context Protocol (MCP
 
    ```bash
    uv add -r requirements.txt
-   playwright install chromium
    ```
 
 4. Set up environment variables:
    - Copy `.env.example` to `.env`
    - Set `MODEL_NAME` to your preferred Ollama model (e.g., `qwen3:1.7b`)
+   - Set `TAVILY_API_KEY` to your Tavily api key you can get it from [Tavily websit](https://app.tavily.com/home)
 
 ## Usage
 
@@ -80,23 +79,23 @@ Saqr-MCP is a Python application that implements the Model Context Protocol (MCP
 
 Currently, the server implements the following tools:
 
-- **web_search**: Searches the web using DuckDuckGo and extracts relevant content using Playwright.
+- **web_search**: Searches the web using Tavily API
 
 ## Environment Variables
 
 | Variable     | Description                                              | Default |
 | ------------ | -------------------------------------------------------- | ------- |
 | `MODEL_NAME` | The name of the Ollama model to use (e.g., `qwen3:1.7b`) | None    |
+| `TAVILY_API_KEY` | Tavily API Key (e.g., `tvly-***`) | None |
 
 ## Dependencies
 
 - `mcp[cli]` - Model Context Protocol implementation
 - `httpx` - HTTP client for Python
-- `playwright` - Browser automation library
-- `duckduckgo-search` - API for DuckDuckGo searches
 - `loguru` - Python logging made simple
 - `groq` - Groq API client (optional)
 - `ollama` - Interface to Ollama for local models
+- `tavily-python` - Search Engine tailored for AI agents
 
 ## License
 

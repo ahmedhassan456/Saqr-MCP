@@ -5,3 +5,4 @@ duckduckgo-search==8.0.1
 loguru==0.7.3
 groq==0.24.0
 ollama==0.4.8
+tavily-python==0.7.2
