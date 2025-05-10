@@ -90,7 +90,7 @@ class SaqrMCPClient:
                     with loading_animation(f"Calling {tool_name}"):
                         result = await self.session.call_tool(tool_name, tool_args)
 
-                    logger.info(f"{tool_name} result: {result.content}")
+                    # logger.info(f"{tool_name} result: {result.content}")
 
                     messages.append({
                         "role": "system",
