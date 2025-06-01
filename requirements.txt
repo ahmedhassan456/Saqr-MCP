@@ -6,3 +6,6 @@ loguru==0.7.3
 groq==0.24.0
 ollama==0.4.8
 tavily-python==0.7.2
+python-docx
+markdown
+htmldocx==0.0.6
