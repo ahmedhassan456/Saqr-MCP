@@ -7,6 +7,7 @@ Saqr-MCP is a Python application that implements the Model Context Protocol (MCP
 - Interactive chat interface for querying models
 - Support for both local models (Ollama) and cloud models (Groq)
 - Robust web search tool integration using Tavily API
+- Word document generation from chat conversations
 - Async architecture for efficient processing
 - Visual loading animations for better user experience
 
@@ -89,6 +90,7 @@ Saqr-MCP is a Python application that implements the Model Context Protocol (MCP
 Currently, the server implements the following tools:
 
 - **web_search**: Searches the web using Tavily API
+- **generate_word**: Generates a Word document from the chat conversation history
 
 ## Environment Variables
 
