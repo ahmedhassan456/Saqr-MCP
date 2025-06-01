@@ -13,7 +13,7 @@ class SaqrMCPClient:
     def __init__(self):
         self.session: Optional[ClientSession] = None
         self.exit_stack = AsyncExitStack()
-        self.model = os.getenv("MODEL_NAME")
+        self.model = os.getenv("OLLAMA_MODEL_NAME")
         logger.info(f"Using model: {self.model}")
         self.history = []
 
