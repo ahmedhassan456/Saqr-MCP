@@ -96,7 +96,7 @@ Currently, the server implements the following tools:
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `MODEL_NAME` | The name of the Ollama model to use (e.g., `qwen3:1.7b`) | None |
+| `OLLAMA_MODEL_NAME` | The name of the Ollama model to use (e.g., `qwen3:1.7b`) | None |
 | `TAVILY_API_KEY` | Tavily API Key | None |
 | `GROQ_MODEL_NAME` | The name of the Groq model to use | None |
 | `GROQ_API_KEY` | Groq API Key | None |
