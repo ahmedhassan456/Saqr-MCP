@@ -1,4 +1,4 @@
-from src.client import SaqrMCPClient
+from src.ollama_client import SaqrMCPClient
 import asyncio
 
 async def main():
@@ -6,11 +6,11 @@ async def main():
     try:
         await client.connect_to_server(
             args=[
-                "run", 
+                "run",
                 "--with",
-                "mcp", 
-                "mcp", 
-                "run", 
+                "mcp",
+                "mcp",
+                "run",
                 "src\\server.py"
             ]
         )
