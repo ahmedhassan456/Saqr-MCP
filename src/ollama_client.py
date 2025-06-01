@@ -45,6 +45,11 @@ class SaqrMCPClient:
     async def process_query(self, query: str) -> str:
         """Process a query using ollama and available tools"""
 
+        self.history.append({
+            "role": "user",
+            "content": query
+        })
+        
         messages = self.history
 
         tools = await self.session.list_tools()
@@ -67,7 +72,7 @@ class SaqrMCPClient:
                         messages=messages,
                         tools=available_tools,
                     )
-
+                    
                 tool_calls = response["message"].get("tool_calls")
                 if tool_calls is None:
                     messages.append({
@@ -84,13 +89,15 @@ class SaqrMCPClient:
                     with loading_animation(f"Calling {tool_name}"):
                         result = await self.session.call_tool(tool_name, tool_args)
 
-                    # logger.info(f"{tool_name} result: {result.content}")
-
                     messages.append({
                         "role": "system",
-                        "content": f"""For the user question {query} we can answer based on the {tool_name} tool result.
-                        
-                        {tool_name} tool result: \n{result.content}""",
+                        "content": f"""
+                            - type: tool_result.
+                            - tool_use_name: {tool_name}.
+                            - content": {result}.
+
+                            use this results to answer the user questions.
+                        """,
                     })
 
             except Exception as e:
@@ -110,11 +117,6 @@ class SaqrMCPClient:
 
                 if query.lower() == 'quit':
                     break
-
-                self.history.append({
-                    "role": "user",
-                    "content": query
-                })
 
                 response = await self.process_query(query)
                 print("\n" + response)
