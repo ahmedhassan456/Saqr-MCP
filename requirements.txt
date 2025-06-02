@@ -1,11 +1,11 @@
 mcp[cli]==1.7.1
 httpx==0.28.1
-playwright==1.52.0
 duckduckgo-search==8.0.1
 loguru==0.7.3
 groq==0.24.0
 ollama==0.4.8
 tavily-python==0.7.2
-python-docx
-markdown
+python-docx==1.1.2
+markdown==3.8
 htmldocx==0.0.6
+mem0ai==0.1.103
