@@ -1,6 +1,6 @@
 # Saqr-MCP ![image](https://github.com/user-attachments/assets/2ee374a5-8b63-4f5a-b7fd-5bdae3a05e37)
 
-Saqr-MCP is a Python application that implements the Model Context Protocol (MCP) to enable AI assistant capabilities with both local models through Ollama and cloud models through Groq. It provides a client-server architecture where the client can communicate with either local or cloud models, while the server provides tools for the LLM including web search capabilities.
+Saqr-MCP is a Python application that implements the Model Context Protocol (MCP) to enable AI assistant capabilities with both local models through Ollama and cloud models through Groq. It provides a client-server architecture where the client can communicate with either local or cloud models, while the server provides tools for the LLM including web search capabilities and memory management.
 
 ## Features
 
@@ -8,6 +8,7 @@ Saqr-MCP is a Python application that implements the Model Context Protocol (MCP
 - Support for both local models (Ollama) and cloud models (Groq)
 - Robust web search tool integration using Tavily API
 - Word document generation from chat conversations
+- Memory management system using mem0 for storing and retrieving information
 - Async architecture for efficient processing
 - Visual loading animations for better user experience
 
@@ -49,7 +50,8 @@ Saqr-MCP is a Python application that implements the Model Context Protocol (MCP
      - `MODEL_NAME`: Your preferred Ollama model (e.g., `qwen3:1.7b`)
      - `TAVILY_API_KEY`: Your Tavily API key from [Tavily website](https://app.tavily.com/home)
      - `GROQ_MODEL_NAME`: Your preferred Groq model name
-     - `GROQ_API_KEY`: Your Groq API key
+     - `GROQ_API_KEY`: Your Groq API key from [Groq website](https://console.groq.com/)
+     - `MEM0_API_KEY`: Your Mem0 API key from [Mem0 website](https://mem0.ai/)
 
 ## Usage
 
@@ -90,7 +92,10 @@ Saqr-MCP is a Python application that implements the Model Context Protocol (MCP
 Currently, the server implements the following tools:
 
 - **web_search**: Searches the web using Tavily API
-- **generate_word**: Generates a Word document from the chat conversation history
+- **word_file_generator**: Generates a Word document from markdown content
+- **add_memory**: Stores new memories with specified types and content
+- **get_all_memories**: Retrieves all stored memories, optionally filtered by type
+- **search_memories**: Performs semantic search through stored memories
 
 ## Environment Variables
 
@@ -100,6 +105,7 @@ Currently, the server implements the following tools:
 | `TAVILY_API_KEY` | Tavily API Key | None |
 | `GROQ_MODEL_NAME` | The name of the Groq model to use | None |
 | `GROQ_API_KEY` | Groq API Key | None |
+| `MEM0_API_KEY` | Mem0 API Key for memory management | None |
 
 ## Dependencies
 
@@ -116,6 +122,7 @@ Currently, the server implements the following tools:
 - `duckduckgo-search` - Search engine integration
 - `python-docx` - DOCX file handling
 - `markdown` - Markdown processing
+- `mem0` - Memory management system
 
 ## License
 
