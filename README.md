@@ -1,16 +1,8 @@
-<h1 style="text-align:center;">🦅 Saqr-MCP</h1>
+# 🦅 Saqr-MCP
 
-<p align="center">
-  <a href="https://www.python.org/downloads/">
-    <img src="https://img.shields.io/badge/python-3.11%2B-blue" alt="Python Version">
-  </a>
-  <a href="LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
-  </a>
-  <a href="https://github.com/astral-sh/uv">
-    <img src="https://img.shields.io/badge/package%20manager-UV-orange" alt="UV Package Manager">
-  </a>
-</p>
+[![Python Version](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![UV Package Manager](https://img.shields.io/badge/package%20manager-UV-orange)](https://github.com/astral-sh/uv)
 
 Saqr-MCP is a powerful Python application that implements the Model Context Protocol (MCP) to enable advanced AI assistant capabilities. It supports both local models through Ollama and cloud models through Groq, providing a flexible client-server architecture. The server component offers a rich set of tools including web search, memory management, document generation, and advanced reasoning capabilities.
 
