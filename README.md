@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>🦅 Saqr-MCP</h1>
+# 🦅 Saqr-MCP
 </div>
 
 <p align="center">
