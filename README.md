@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # 🦅 Saqr-MCP
+=======
+<h1 align="center">🦅 Saqr-MCP</h1>
+>>>>>>> f290c5ca9c12ae3784566e65bea2a76fd37bd9bc
 
 [![Python Version](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
