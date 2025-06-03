@@ -1,6 +1,4 @@
-<div align="center">
-# 🦅 Saqr-MCP
-</div>
+<h1 align="center">🦅 Saqr-MCP</h1>
 
 <p align="center">
   <a href="https://www.python.org/downloads/">
