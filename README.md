@@ -135,7 +135,6 @@ The server implements a comprehensive set of tools for various functionalities:
 - 🚀 `fastapi` - Web framework for building APIs
 - ⚡ `uvicorn` - ASGI server implementation
 - 📄 `htmldocx` - HTML to DOCX converter
-- 🌐 `playwright` - Browser automation
 - 🔍 `duckduckgo-search` - Search engine integration
 - 📄 `python-docx` - DOCX file handling
 - 📝 `markdown` - Markdown processing
