@@ -9,6 +9,7 @@ import markdown
 from htmldocx import HtmlToDocx
 from mem0 import MemoryClient
 import json
+import datetime
 
 _ = load_dotenv()
 
@@ -29,8 +30,12 @@ Extract the Following Information:
 mem0_client.update_project(custom_instructions=CUSTOM_INSTRUCTIONS)
 
 
+thoughts_log = []
+
+
+# web search tool
 @mcp.tool()
-def web_search(query: str):
+async def web_search(query: str):
     """
     This tool performs real-time web searches to retrieve up-to-date information from the internet
     
@@ -50,8 +55,10 @@ def web_search(query: str):
         logger.error(f"Error during web search: {e}")
         return "An error occurred while performing the search."
 
+
+# word files generator tool
 @mcp.tool()
-def word_file_generator(filename: str, title: str, content: str):
+async def word_file_generator(filename: str, title: str, content: str) -> str:
     """
     This tool generates Microsoft Word (.docx) documents based on structured input
 
@@ -80,6 +87,7 @@ def word_file_generator(filename: str, title: str, content: str):
         return f"An error occurred while creating the Word file: {e}"
 
 
+# memory tools
 @mcp.tool(
     description="""Add a new memory to mem0. This tool stores various types of information for future reference.
     Specify the memory type and the content to store.
@@ -139,6 +147,76 @@ async def search_memories(query: str, memory_type: str = None) -> str:
         return json.dumps(flattened_memories, indent=2)
     except Exception as e:
         return f"Error searching memories: {str(e)}"
+    
+
+# think tools
+@mcp.tool()
+async def think(thought: str) -> str:
+    """Use this tool to think about something. It will not obtain new information or change anything, 
+    but just append the thought to the log. Use it when complex reasoning or cache memory is needed.
+
+    Args:
+        thought: A thought to think about. This can be structured reasoning, step-by-step analysis,
+                policy verification, or any other mental process that helps with problem-solving, with a strict requirement to record the source URL immediately after each piece of evidence that could be used as a reference citation for the final action.
+    """
+    global thoughts_log
+    timestamp = datetime.datetime.now().isoformat()
+    thoughts_log.append({
+        "timestamp": timestamp,
+        "thought": thought
+    })
+            
+    return thought
+
+
+@mcp.tool()
+async def get_thoughts() -> str:
+    """Retrieve all thoughts recorded in the current session.
+            
+    This tool helps review the thinking process that has occurred so far.
+    """
+    global thoughts_log
+    if not thoughts_log:
+        return "No thoughts have been recorded yet."
+            
+    formatted_thoughts = []
+    for i, entry in enumerate(thoughts_log, 1):
+        formatted_thoughts.append(f"Thought #{i} ({entry['timestamp']}):\n{entry['thought']}\n")
+            
+    return "\n".join(formatted_thoughts)
+
+
+@mcp.tool()
+async def clear_thoughts() -> str:
+    """Clear all recorded thoughts from the current session.
+            
+    Use this to start fresh if the thinking process needs to be reset.
+    """
+    global thoughts_log
+    count = len(thoughts_log)
+    thoughts_log = []
+    return f"Cleared {count} recorded thoughts."
+
+
+@mcp.tool()
+async def get_thought_stats() -> str:
+    """Get statistics about the thoughts recorded in the current session."""
+    global thoughts_log
+    if not thoughts_log:
+        return "No thoughts have been recorded yet."
+            
+    total_thoughts = len(thoughts_log)
+    avg_length = sum(len(entry["thought"]) for entry in thoughts_log) / total_thoughts if total_thoughts else 0
+    longest_thought = max((len(entry["thought"]), i) for i, entry in enumerate(thoughts_log)) if thoughts_log else (0, -1)
+            
+    stats = {
+        "total_thoughts": total_thoughts,
+        "average_length": round(avg_length, 2),
+        "longest_thought_index": longest_thought[1] + 1 if longest_thought[1] >= 0 else None,
+        "longest_thought_length": longest_thought[0] if longest_thought[0] > 0 else None
+    }
+            
+    return json.dumps(stats, indent=2)
 
 
 def main():
