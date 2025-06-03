@@ -1,23 +1,25 @@
 # Saqr-MCP ![image](https://github.com/user-attachments/assets/2ee374a5-8b63-4f5a-b7fd-5bdae3a05e37)
 
-Saqr-MCP is a Python application that implements the Model Context Protocol (MCP) to enable AI assistant capabilities with both local models through Ollama and cloud models through Groq. It provides a client-server architecture where the client can communicate with either local or cloud models, while the server provides tools for the LLM including web search capabilities and memory management.
+Saqr-MCP is a powerful Python application that implements the Model Context Protocol (MCP) to enable advanced AI assistant capabilities. It supports both local models through Ollama and cloud models through Groq, providing a flexible client-server architecture. The server component offers a rich set of tools including web search, memory management, document generation, and advanced reasoning capabilities.
 
 ## Features
 
 - Interactive chat interface for querying models
 - Support for both local models (Ollama) and cloud models (Groq)
-- Robust web search tool integration using Tavily API
-- Word document generation from chat conversations
-- Memory management system using mem0 for storing and retrieving information
+- Advanced web search capabilities using Tavily API
+- Word document generation from markdown content
+- Comprehensive memory management system using mem0
+- Advanced reasoning and thought process tracking
 - Async architecture for efficient processing
 - Visual loading animations for better user experience
+- Session-based thought logging and analysis
+- Document generation with markdown support
 
 ## Prerequisites
 
 - Python 3.11 or higher
 - [Ollama](https://ollama.ai/) installed with local models (for local model usage)
 - [UV](https://github.com/astral-sh/uv) package manager (recommended)
-- Groq API key (for cloud model usage)
 
 ## Installation
 
@@ -84,27 +86,36 @@ Saqr-MCP is a Python application that implements the Model Context Protocol (MCP
 - `src/`
   - `ollama_client.py` - MCP client implementation for Ollama models
   - `groq_client.py` - MCP client implementation for Groq models
-  - `server.py` - MCP server implementation with web search tool
+  - `server.py` - MCP server implementation with all tools
   - `logger.py` - Custom logging utilities with visual animations
 
 ## Available Tools
 
-Currently, the server implements the following tools:
+The server implements a comprehensive set of tools for various functionalities:
 
-- **web_search**: Searches the web using Tavily API
-- **word_file_generator**: Generates a Word document from markdown content
-- **add_memory**: Stores new memories with specified types and content
+### Web Search and Document Generation
+- **web_search**: Performs real-time web searches using Tavily API to retrieve up-to-date information
+- **word_file_generator**: Creates Microsoft Word documents from markdown content with proper formatting
+
+### Memory Management
+- **add_memory**: Stores new memories with specified types and content in mem0
 - **get_all_memories**: Retrieves all stored memories, optionally filtered by type
-- **search_memories**: Performs semantic search through stored memories
+- **search_memories**: Performs semantic search through stored memories to find relevant information
+
+### Reasoning and Thought Process
+- **think**: Records thoughts and reasoning processes for complex problem-solving
+- **get_thoughts**: Retrieves all thoughts recorded in the current session
+- **clear_thoughts**: Clears all recorded thoughts from the current session
+- **get_thought_stats**: Provides detailed statistics about recorded thoughts
 
 ## Environment Variables
 
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `OLLAMA_MODEL_NAME` | The name of the Ollama model to use (e.g., `qwen3:1.7b`) | None |
-| `TAVILY_API_KEY` | Tavily API Key | None |
+| `TAVILY_API_KEY` | Tavily API Key for web search capabilities | None |
 | `GROQ_MODEL_NAME` | The name of the Groq model to use | None |
-| `GROQ_API_KEY` | Groq API Key | None |
+| `GROQ_API_KEY` | Groq API Key for cloud model access | None |
 | `MEM0_API_KEY` | Mem0 API Key for memory management | None |
 
 ## Dependencies
