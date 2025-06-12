@@ -1,4 +1,4 @@
-from src.ollama_client import SaqrMCPClient
+from src.clients.ollama_client import SaqrMCPClient
 import asyncio
 
 async def main():
@@ -11,7 +11,7 @@ async def main():
                 "mcp",
                 "mcp",
                 "run",
-                "src\\server.py"
+                "src\\servers\\saqr_server.py"
             ]
         )
         await client.chat_loop()

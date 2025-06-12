@@ -1,6 +1,5 @@
 from mcp.server.fastmcp import FastMCP
 import asyncio
-from logger import logger
 from tavily import TavilyClient
 import os
 from dotenv import load_dotenv
@@ -52,7 +51,7 @@ async def web_search(query: str):
         else:
             return "No results found."
     except Exception as e:
-        logger.error(f"Error during web search: {e}")
+        print(f"Error during web search: {e}")
         return "An error occurred while performing the search."
 
 
@@ -83,7 +82,7 @@ async def word_file_generator(filename: str, title: str, content: str) -> str:
 
         return f"The word file created successfully with name: {filename}"
     except Exception as e:
-        logger.error(f"Error creating Word file: {e}")
+        print(f"Error creating Word file: {e}")
         return f"An error occurred while creating the Word file: {e}"
 
 
@@ -105,6 +104,7 @@ async def add_memory(memory_type: str, content: str) -> str:
         mem0_client.add(messages, user_id=DEFAULT_USER_ID, output_format="v1.1", metadata={"memory_type": memory_type})
         return f"Successfully added memory of type {memory_type}: {content}"
     except Exception as e:
+        print(f"Error adding memory: {str(e)}")
         return f"Error adding memory: {str(e)}"
     
 
@@ -125,6 +125,7 @@ async def get_all_memories(memory_type: str = None) -> str:
         flattened_memories = [memory["memory"] for memory in memories["results"]]
         return json.dumps(flattened_memories, indent=2)
     except Exception as e:
+        print(f"Error getting memories: {str(e)}")
         return f"Error getting memories: {str(e)}"
     
 
@@ -146,6 +147,7 @@ async def search_memories(query: str, memory_type: str = None) -> str:
         flattened_memories = [memory["memory"] for memory in memories["results"]]
         return json.dumps(flattened_memories, indent=2)
     except Exception as e:
+        print(f"Error searching memories: {str(e)}")
         return f"Error searching memories: {str(e)}"
     
 
@@ -223,9 +225,9 @@ def main():
     try:
         asyncio.run(mcp.run(transport="stdio"))
     except KeyboardInterrupt:
-        logger.error("Server stopped")
+        print("Server stopped")
     except Exception as e:
-        logger.error(f"An unexpected error occurred: {e}")
+        print(f"An unexpected error occurred: {e}")
 
 if __name__ == "__main__":
     main()

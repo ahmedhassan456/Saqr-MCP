@@ -5,7 +5,7 @@ from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 import ollama
 from dotenv import load_dotenv
-from src.logger import logger, loading_animation
+from src.core.logger import logger, loading_animation
 
 _ = load_dotenv()
 
